@@ -1,0 +1,58 @@
+
+Private Sub Form_Load()
+
+
+LoadTab
+
+EngPropHrsCycles
+
+End Sub
+
+Private Sub tabSchedules_Change()
+     LoadTab
+End Sub
+
+Private Sub LoadTab()
+    Dim SQL As String
+    
+    Select Case Me.tabSchedules.Value
+        Case Is = Me.tabSchedules.Pages("ScheduledTask").PageIndex
+            SQL = "Exec ScheduleOpn " & Forms!FrmManagement!ChildData!ScheduleID
+            Me.RecordSource = SQL
+        
+        Case Is = Me.tabSchedules.Pages("MaintenanceFreq").PageIndex
+            SQL = "Exec ScheduleDetailsLoadSp " & Forms!FrmManagement!ChildData!ScheduleID
+            Me.ScheduleDetailSubform.Form.RecordSource = SQL
+            Me.ScheduleDetailSubform.Form.Requery
+        
+        Case Is = Me.tabSchedules.Pages("TaskDetails").PageIndex
+            'SQL = "ScheduleWorkPacks"
+            SQL = "Exec ScheduleWorkPacksLoadSp " & Forms!FrmManagement!ChildData!ScheduleID
+            Me.ScheduleWorkPackSubform.Form.RecordSource = SQL
+            Me.ScheduleWorkPackSubform.Form.Requery
+        
+        Case Is = Me.tabSchedules.Pages("ComplianceInstallation").PageIndex
+            SQL = "Exec ScheduleOpn " & Forms!FrmManagement!ChildData!ScheduleID
+            Me.RecordSource = SQL
+        
+        Case Is = Me.tabSchedules.Pages("ModStatus").PageIndex
+            SQL = "Exec ScheduleOpn " & Forms!FrmManagement!ChildData!ScheduleID
+            Me.RecordSource = SQL
+        
+        Case Is = Me.tabSchedules.Pages("Reports").PageIndex
+            'SQL = "ScheduleReports"
+            SQL = "Exec ScheduleReportsLoadSp " & Forms!FrmManagement!ChildData!ScheduleID
+            Me.ScheduleReportsFrm.Form.RecordSource = SQL
+            Me.ScheduleReportsFrm.Form.Requery
+    End Select
+
+End Sub
+
+
+Private Sub tabSchedules_Click()
+LoadTab
+End Sub
+
+Private Sub TaskDetails_Click()
+LoadTab
+End Sub
